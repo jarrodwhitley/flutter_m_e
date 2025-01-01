@@ -1,39 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:m_e/src/data/content_data.dart';
-import 'package:m_e/src/models/content.dart';
+import 'package:m_e/src/data/devotions.dart';
+import 'package:m_e/src/models/devotion.dart';
 import 'package:m_e/src/screens/drawer.dart';
+import 'package:m_e/src/screens/devotion.dart';
+import 'package:m_e/src/screens/sermon.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  late List<Content> selectedContent;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late List<Devotion> selectedDevotions;
+
+  int _selectedPageIndex = 0;
+  void _selectPage(int index) {
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     final now = DateTime.now();
-    selectedContent = contentData.where((content) {
+    selectedDevotions = devotions.where((content) {
       return content.month == now.month && content.day == now.day;
     }).toList();
-
-    // temp override for testing purposes
-    // set selectedContent to September 10th
-    // selectedContent = contentData.where((content) {
-    //   return content.month == 9 && content.day == 10;
-    // }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final isAm = now.hour < 12;
-    final contentToShow = selectedContent
+    final devotion = selectedDevotions
         .firstWhere((content) => content.time == (isAm ? 'am' : 'pm'));
+
+    // Handle the active page
+    Widget activePage = DevotionScreen(
+      isAm: isAm,
+      devotion: devotion,
+    );
+    var activePageTitle = devotion.title;
+
+    if (_selectedPageIndex == 1) {
+      // final favoriteMeals = ref.watch(favoriteMealsProvider);
+      activePage = SermonScreen();
+      activePageTitle = 'sermon.title';
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
         elevation: 0,
         title: Text(
-          contentToShow.title,
+          activePageTitle,
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -57,40 +74,20 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       drawer: const MainDrawer(),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(isAm
-                ? 'lib/src/assets/images/morning_bg.png'
-                : 'lib/src/assets/images/evening_bg.png'),
-            fit: BoxFit.cover,
+      body: activePage,
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _selectPage,
+        currentIndex: _selectedPageIndex,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sunny),
+            label: 'Devotions',
           ),
-        ),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    contentToShow.keyverse,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    contentToShow.body,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Sermons',
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,5 +1,5 @@
-class Content {
-  const Content({
+class Devotion {
+  const Devotion({
     required this.title,
     required this.date,
     required this.time,
