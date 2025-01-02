@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_e/src/data/devotions.dart';
 import 'package:m_e/src/models/devotion.dart';
+import 'package:m_e/src/models/sermon.dart';
 import 'package:m_e/src/screens/drawer.dart';
 import 'package:m_e/src/screens/devotion.dart';
 import 'package:m_e/src/screens/sermon.dart';
@@ -14,13 +15,19 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  late List<Devotion> selectedDevotions;
-
+  final PageController _pageController = PageController();
+  late List<Devotion> selectedDevotions = [];
   int _selectedPageIndex = 0;
+
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -47,7 +54,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     var activePageTitle = devotion.title;
 
     if (_selectedPageIndex == 1) {
-      // final favoriteMeals = ref.watch(favoriteMealsProvider);
       activePage = SermonScreen();
       activePageTitle = 'sermon.title';
     }
@@ -74,8 +80,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ),
       drawer: const MainDrawer(),
-      body: activePage,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedPageIndex = index;
+          });
+        },
+        children: [
+          DevotionScreen(isAm: isAm, devotion: devotion),
+          SermonScreen()
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: isAm
+            ? const Color.fromARGB(255, 86, 159, 149)
+            : const Color.fromARGB(255, 41, 22, 62),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
         items: const [

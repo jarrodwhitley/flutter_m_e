@@ -1,19 +1,21 @@
+import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
+
+const uuid = Uuid();
+
 class Sermon {
-  const Sermon({
-    required this.id,
-    required this.date,
+  Sermon({
     required this.title,
     required this.scripture,
     required this.source,
     required this.sourceLink,
     required this.body,
-  });
+  }) : id = uuid.v4();
 
   final String id;
-  final DateTime date;
   final String title;
   final String scripture;
   final String source;
   final String sourceLink;
-  final String body;
+  final List<dynamic> body;
 }

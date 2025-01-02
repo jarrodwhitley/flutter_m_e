@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'src/screens/home.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:m_e/src/screens/home.dart';
 
 // set up theme
-final theme = ThemeData().copyWith(
+final theme = ThemeData(
+  textTheme: GoogleFonts.latoTextTheme(),
+).copyWith(
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromARGB(255, 103, 189, 178),
   ),
@@ -10,6 +13,7 @@ final theme = ThemeData().copyWith(
 
 // dark theme
 final darkTheme = ThemeData.dark().copyWith(
+  textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromARGB(255, 55, 30, 83),
   ),
