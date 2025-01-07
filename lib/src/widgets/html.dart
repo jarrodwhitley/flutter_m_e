@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-// the goal of this widget is to parse HTML text and display it as it would appear in a browser
-// example usage: Html(data: 'Hello, <em>World</em>! How are you?')
-// the above example would display "Hello, World! How are you?" with "World" in italics
-
 class Html extends StatelessWidget {
-  const Html({super.key, required this.data});
+  const Html({super.key, required this.data, this.style, this.textAlign});
 
   final String data;
+  final TextStyle? style;
+  final TextAlign? textAlign;
 
-  // Function that parses the HTML text and returns a list of widgets
   List<Widget> _parseHtml() {
     final List<TextSpan> textSpans = [];
     final List<String> tags = data.split(RegExp(r'<|>'));
@@ -25,14 +22,17 @@ class Html extends StatelessWidget {
       if (tag.startsWith('em')) {
         final String text = tags[i + 1];
         textSpans.add(TextSpan(
-            text: text, style: const TextStyle(fontStyle: FontStyle.italic)));
+            text: text,
+            style: style?.copyWith(fontStyle: FontStyle.italic) ??
+                const TextStyle(fontStyle: FontStyle.italic)));
         addSpace = true;
         i++; // Skip the next tag as it has been processed
       } else if (tag.startsWith('sup')) {
         final String text = tags[i + 1];
         textSpans.add(TextSpan(
             text: text,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)));
+            style: style?.copyWith(fontSize: 12, fontWeight: FontWeight.bold) ??
+                const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)));
         addSpace = true;
         i++; // Skip the next tag as it has been processed
       } else {
@@ -41,15 +41,18 @@ class Html extends StatelessWidget {
           text = ' $text';
           addSpace = false;
         }
-        textSpans.add(TextSpan(text: text));
+        textSpans.add(TextSpan(text: text, style: style));
       }
     }
 
     return [
       RichText(
-          text: TextSpan(
-              children: textSpans,
-              style: const TextStyle(fontSize: 16, color: Colors.black)))
+        textAlign: textAlign ?? TextAlign.start,
+        text: TextSpan(
+          children: textSpans,
+          style: style ?? const TextStyle(fontSize: 16, color: Colors.black),
+        ),
+      ),
     ];
   }
 

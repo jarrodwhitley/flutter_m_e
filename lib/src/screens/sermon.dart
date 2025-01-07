@@ -7,7 +7,8 @@ class SermonScreen extends StatelessWidget {
   SermonScreen({super.key});
 
   // for testing set the selectedSermon to the first sermon in the list
-  final Sermon sermon = sermons[1];
+  final Sermon sermon = sermons
+      .firstWhere((sermon) => sermon.title == 'Christ the Conqueror of Satan');
 
   @override
   Widget build(BuildContext context) {
@@ -22,47 +23,49 @@ class SermonScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
+              // Title
               Text(
                 sermon.title,
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
+              // Scripture
               Text(
                 sermon.scripture,
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
-              ...sermon.body.map((dynamic item) {
-                if (item is String) {
-                  return Container(
-                    margin: const EdgeInsets.only(top: 16.0),
-                    child: Html(
-                      data: item,
-                    ),
-                  );
-                } else if (item is Map<String, dynamic>) {
-                  return Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 16.0),
-                        child: Text(
-                          item['title'],
-                          style: const TextStyle(fontSize: 16),
-                        ),
+              // Body
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: sermon.body.length,
+                itemBuilder: (context, index) {
+                  final item = sermon.body[index];
+                  if (item is String) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 16.0),
+                      child: Html(
+                        data: item,
                       ),
-                      const SizedBox(height: 16),
-                      Container(
-                        margin: const EdgeInsets.only(top: 16.0),
-                        child: Text(
-                          item['body'],
-                          style: const TextStyle(fontSize: 16),
-                        ),
+                    );
+                  } else if (item is List<String>) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 16.0),
+                      child: Column(
+                        children: [
+                          for (String string in item)
+                            Html(
+                              data: string,
+                              textAlign: TextAlign.center,
+                            ),
+                        ],
                       ),
-                    ],
-                  );
-                }
-                return const SizedBox(height: 16);
-              }),
+                    );
+                  }
+                  return Container();
+                },
+              ),
             ],
           ),
         ),
