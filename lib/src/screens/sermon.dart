@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:m_e/src/data/sermons.dart';
 import 'package:m_e/src/models/sermon.dart';
 import 'package:m_e/src/widgets/html.dart';
 
 class SermonScreen extends StatelessWidget {
-  SermonScreen({super.key});
+  const SermonScreen({super.key, required this.sermon});
 
   // for testing set the selectedSermon to the first sermon in the list
-  final Sermon sermon = sermons
-      .firstWhere((sermon) => sermon.title == 'Christ the Conqueror of Satan');
+  final Sermon sermon;
 
   @override
   Widget build(BuildContext context) {

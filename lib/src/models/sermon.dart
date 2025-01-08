@@ -1,8 +1,9 @@
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
 
 const uuid = Uuid();
 
+@immutable
 class Sermon {
   Sermon({
     required this.title,
@@ -18,4 +19,24 @@ class Sermon {
   final String source;
   final String sourceLink;
   final List<dynamic> body;
+
+  // set up fromId()
+  Sermon.fromId(this.id)
+      : title = '',
+        scripture = '',
+        source = '',
+        sourceLink = '',
+        body = [];
+
+  // set up == operator
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Sermon && other.id == id;
+  }
+
+  // set up hashCode
+  @override
+  int get hashCode => id.hashCode;
 }

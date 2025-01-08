@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_e/src/screens/home.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // set up theme
 final theme = ThemeData(
@@ -20,12 +21,16 @@ final darkTheme = ThemeData.dark().copyWith(
 );
 
 void main() {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure the binding is initialized
   runApp(
-    MaterialApp(
-      theme: theme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.dark,
-      home: const App(),
+    ProviderScope(
+      child: MaterialApp(
+        theme: theme,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.dark,
+        home: const App(),
+      ),
     ),
   );
 }
