@@ -12,30 +12,20 @@ class BookmarksNotifier extends StateNotifier<List<Sermon>> {
   Future<void> _loadBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
     final bookmarkIds = prefs.getStringList('bookmarks') ?? [];
+    // before assigning the state, remove duplicate ids
+    final uniqueBookmarkIds = bookmarkIds.toSet().toList();
+    prefs.setStringList('bookmarks', uniqueBookmarkIds);
     state = bookmarkIds
         .map((id) => Sermon.fromId(id))
         .where((sermon) => sermon.id != '')
         .toList();
-    // print titles of all bookmarked sermons that are loaded
+    print('bookmarks.dart => loaded prefs ${prefs.getStringList('bookmarks')}');
     print('(state)loaded bookmarks length ${state.length}');
     // match sermon id from the loaded bookmarks to the sermons list and print the title
-    state.forEach((s) {
-      final sermon = sermonsData.firstWhere(
-        (sermon) => sermon.id == s.id,
-        orElse: () => Sermon(
-            id: '',
-            title: '',
-            scripture: '',
-            source: '',
-            sourceLink: '',
-            body: const []),
-      );
-      if (sermon.id != '') {
-        print('(state)loaded bookmarks ${sermon.title}');
-      } else {
-        print('(state)loaded bookmarks: Sermon not found for id ${s.id}');
-      }
-    });
+    for (final sermon in bookmarkIds) {
+      final sermonTitle = sermonsData.firstWhere((s) => s.id == sermon).title;
+      print('bookmarks.dart => loaded bookmarks ${sermonTitle}');
+    }
   }
 
   void addBookmark(Sermon sermon) {
@@ -66,8 +56,15 @@ class BookmarksNotifier extends StateNotifier<List<Sermon>> {
 
   Future<void> _saveBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('bookmarks', state.map((s) => s.id).toList());
-    print('bookmarks.dart => prefs ${prefs.getStringList('bookmarks')}');
+    final bookmarkIds = state.map((s) => s.id).toList();
+    for (final sermon in state) {
+      if (!bookmarkIds.contains(sermon.id)) {
+        prefs.setStringList('bookmarks', bookmarkIds);
+      }
+      print('bookmarks.dart => saved bookmarks ${sermon.id}');
+    }
+
+    print('bookmarks.dart => saved prefs ${prefs.getStringList('bookmarks')}');
   }
 }
 
