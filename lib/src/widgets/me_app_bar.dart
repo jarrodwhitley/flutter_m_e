@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:m_e/src/models/sermon.dart';
 import 'package:m_e/src/providers/bookmarks.dart';
+import 'package:m_e/src/providers/sermon.dart';
 
 class MeAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   const MeAppBar(
@@ -29,8 +30,9 @@ class MeAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
 class MeAppBarState extends ConsumerState<MeAppBar> {
   @override
   Widget build(BuildContext context) {
-    var isBookmarked = widget.sermon != null &&
-        ref.watch(bookmarksProvider).contains(widget.sermon!);
+    final sermon = ref.watch(sermonProvider);
+    var isBookmarked =
+        sermon != null && ref.watch(bookmarksProvider).contains(sermon.id);
 
     return AppBar(
       actions: widget.sermon != null

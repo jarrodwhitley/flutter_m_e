@@ -74,3 +74,11 @@ class BookmarksNotifier extends StateNotifier<List<String>> {
     print('bookmarks.dart => saved prefs ${prefs.getStringList('bookmarks')}');
   }
 }
+
+// create a isBookmarked function to check if a sermon is bookmarked
+Future<bool> isBookmarked(Sermon sermon) async {
+  // final List<Sermon> sermonsData = sermons;
+  final prefs = await SharedPreferences.getInstance();
+  final bookmarkIds = prefs.getStringList('bookmarks') ?? [];
+  return bookmarkIds.contains(sermon.id);
+}
