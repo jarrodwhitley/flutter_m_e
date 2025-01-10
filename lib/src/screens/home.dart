@@ -43,7 +43,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
 
   void bookmarkToggle(Sermon sermon) {
     setState(() {
-      ref.read(bookmarksProvider.notifier).toggleBookmark(sermon);
+      ref.read(bookmarksProvider.notifier).toggleBookmark(sermon.id.toString());
     });
   }
 

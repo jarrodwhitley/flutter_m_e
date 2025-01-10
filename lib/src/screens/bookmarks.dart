@@ -1,6 +1,8 @@
 // this screen will show all bookmarked sermons in a list view
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:m_e/src/data/sermons.dart';
 import 'package:m_e/src/providers/bookmarks.dart';
 import 'package:m_e/src/providers/sermon.dart';
 import 'package:m_e/src/models/sermon.dart';
@@ -17,16 +19,31 @@ class BookmarksScreen extends ConsumerStatefulWidget {
 class BookmarksScreenState extends ConsumerState<BookmarksScreen> {
   @override
   Widget build(BuildContext context) {
-    final ref = ProviderScope.containerOf(context);
     final isAm = ref.read(isAmProvider);
+    final bookmarkedSermonIds = ref.watch(bookmarksProvider);
+    final List<Sermon> sermonData = sermons;
+    print('bookmarkedSermonIds $bookmarkedSermonIds');
+    final List<Sermon> bookmarkedSermons = bookmarkedSermonIds
+        .map((id) => sermonData.firstWhere(
+              (sermon) => sermon.id == id.toString(),
+              orElse: () => Sermon(
+                id: '',
+                title: '',
+                scripture: '',
+                source: '',
+                sourceLink: '',
+                body: [],
+              ),
+            ))
+        .toList();
+    print('bookmarkedSermons $bookmarkedSermons');
+
     void onSermonSelected(Sermon sermon) {
       // TODO: I'd love to do this a better way eventually
       Navigator.of(context).pop();
       Navigator.of(context).pop();
       ref.read(sermonProvider.notifier).selectSermon(sermon);
     }
-
-    final bookmarkedSermons = ref.read(bookmarksProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -101,7 +118,9 @@ class BookmarksScreenState extends ConsumerState<BookmarksScreen> {
                   key: Key(sermon.id),
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
-                    ref.read(bookmarksProvider.notifier).removeBookmark(sermon);
+                    ref
+                        .read(bookmarksProvider.notifier)
+                        .removeBookmark(sermon.id);
                   },
                   background: Container(
                     color: Colors.red,
