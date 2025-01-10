@@ -12,7 +12,6 @@ class BookmarksNotifier extends StateNotifier<List<Sermon>> {
   Future<void> _loadBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
     final bookmarkIds = prefs.getStringList('bookmarks') ?? [];
-    // before assigning the state, remove duplicate ids
     final uniqueBookmarkIds = bookmarkIds.toSet().toList();
     prefs.setStringList('bookmarks', uniqueBookmarkIds);
     state = bookmarkIds
@@ -24,7 +23,7 @@ class BookmarksNotifier extends StateNotifier<List<Sermon>> {
     // match sermon id from the loaded bookmarks to the sermons list and print the title
     for (final sermon in bookmarkIds) {
       final sermonTitle = sermonsData.firstWhere((s) => s.id == sermon).title;
-      print('bookmarks.dart => loaded bookmarks ${sermonTitle}');
+      print('bookmarks.dart => loaded bookmarks $sermonTitle');
     }
   }
 
@@ -51,19 +50,17 @@ class BookmarksNotifier extends StateNotifier<List<Sermon>> {
     } else {
       addBookmark(sermon);
     }
-    state.forEach((s) => print('bookmarks.dart => toggled ${s.id}'));
   }
 
   Future<void> _saveBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
     final bookmarkIds = state.map((s) => s.id).toList();
+    final prefsBookmarks = prefs.getStringList('bookmarks') ?? [];
     for (final sermon in state) {
-      if (!bookmarkIds.contains(sermon.id)) {
+      if (!prefsBookmarks.contains(sermon.id)) {
         prefs.setStringList('bookmarks', bookmarkIds);
       }
-      print('bookmarks.dart => saved bookmarks ${sermon.id}');
     }
-
     print('bookmarks.dart => saved prefs ${prefs.getStringList('bookmarks')}');
   }
 }

@@ -125,7 +125,7 @@ class SettingsScreen extends ConsumerWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: selected ? Colors.grey : Colors.white,
         foregroundColor: Colors.black,
-        side: BorderSide(color: Colors.grey),
+        side: const BorderSide(color: Colors.grey),
         elevation: 0,
       ),
       onPressed: () {
@@ -140,7 +140,7 @@ class SettingsScreen extends ConsumerWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        side: BorderSide(color: Colors.grey),
+        side: const BorderSide(color: Colors.grey),
         elevation: 0,
       ),
       onPressed: () {

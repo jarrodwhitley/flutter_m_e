@@ -61,7 +61,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
 
     if (_selectedPageIndex == 1) {
       if (sermon != null) {
-        activeScreen = SermonScreen(sermon: sermon!);
+        activeScreen = SermonScreen(sermon: sermon);
         activeScreenTitle = 'Sermon';
       } else {
         activeScreen = const SermonSearchScreen();
@@ -82,7 +82,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         sermon: sermon,
         isAm: isAm,
         bookmarkToggle: bookmarkToggle,
-        isBookmarked: sermon != null ? isBookmarked(sermon!) : false,
+        isBookmarked: sermon != null ? isBookmarked(sermon) : false,
       ),
       drawer: const MainDrawer(),
       body: PageView(

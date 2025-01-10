@@ -2,7 +2,7 @@ import 'package:m_e/src/models/sermon.dart';
 
 final sermons = [
   Sermon(
-    id: "1",
+    id: '1',
     title: 'Praises and Vows Accepted in Zion',
     scripture:
         '"Praise waiteth for thee, O God, in Sion: and unto thee shall the vow be performed. O thou that hearest prayer, unto thee shall all flesh more."—Psalm 65:1-2',
@@ -82,7 +82,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "2",
+    id: '2',
     title: 'The Time is Short',
     scripture: '“The time is short.” — 1 Corinthians vii. 29.',
     source: 'Metropolitan Tabernacle Pulpit Volume 49',
@@ -134,7 +134,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "3",
+    id: '3',
     title: 'North and South',
     scripture:
         '"I will say to the north, Give up; and to the south, keep not back."—Isaiah 43:6',
@@ -177,7 +177,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "4",
+    id: '4',
     title: 'Christ the Conqueror of Satan',
     scripture:
         '“And I will put enmity between thee and the woman, and between thy seed and her seed; it shall bruise thy head, and thou shalt bruise his heel.”— Genesis iii. 15.',
@@ -248,7 +248,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "5",
+    id: '5',
     title: 'Beauty for Ashes',
     scripture:
         '"To appoint unto them that mourn in Zion, to give unto them beauty for ashes, the oil of joy for mourning, the garment of praise for the spirit of heaviness; that they might be called trees of righteousness, the planting of the Lord, that he might be glorified."—Isaiah 61:3',
@@ -315,7 +315,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "6",
+    id: '6',
     title: 'Cleansing:  A Covenant Blessing',
     scripture:
         '“Then will I sprinkle clean water upon you, and ye shall he clean: from all your filthiness, and from all your idols, will I cleanse you.”— Ezekiel xxxvi. 25.',
@@ -384,7 +384,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "7",
+    id: '7',
     title: 'The Best Strengthening Medicine',
     scripture: '“Out of weakness were made strong.”— Hebrews xi. 34.',
     source: 'Metropolitan Tabernacle Pulpit Volume 37',
@@ -418,7 +418,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "8",
+    id: '8',
     title: 'Sleep Not',
     scripture: '"Let us not sleep, as do others."—1 Thessalonians 5:6',
     source: 'Metropolitan Tabernacle Pulpit Volume 17',
@@ -487,7 +487,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "9",
+    id: '9',
     title: 'A New Order of Priests and Levites',
     scripture:
         '"And I will also take of them for priests and for Levites, saith the Lord."—Isaiah 66:21',
@@ -524,7 +524,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "10",
+    id: '10',
     title: 'Concern for Other Men\'s Souls',
     scripture:
         '“I say the truth in Christ, I lie not, my conscience also bearing me witness in theHoly Ghost, that I have great heaviness and continual sorrow in mine heart. ForI could wish that myself were accursed from Christ for my brethren, my kinsmanaccording to the flesh: who are Israelites; to whom pertaineth the adoption, and theglory, and the covenants, and the giving of the law, and the service of God, and thepromises; whose are the fathers, and of whom as concerning the flesh Christ came,who is over all, God blessed for ever. Amen.”— Romans ix. 1— 5.',
@@ -564,7 +564,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "11",
+    id: '11',
     title: 'A Visit to the Harvest Field',
     scripture:
         '"Be patient therefore, brethren, unto the coming of the Lord. Behold, the husbandman waited for the precious fruit of the earth, and hath long patience for it, until he receive the early and latter rain. Be ye also patient; stablish your hearts: for the coming of the Lord draweth nigh."—James 5:7-8',
@@ -600,7 +600,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "12",
+    id: '12',
     title: 'The Great Emancipator',
     scripture:
         '“And thou shalt say unto Pharaoh, thus saith the Lord, Israel is my son, even my firstborn: and I say unto thee, Let my son go, that he may serve me.”— Exodus iv. 22, 23.',
@@ -649,7 +649,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "13",
+    id: '13',
     title: 'Wake Up! Wake Up!',
     scripture:
         '“That, knowing the time, that now it is high time to awake out of sleep: for nowis our salvation nearer than when we believed.”— Romans xiii. 11.',
@@ -698,7 +698,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "14",
+    id: '14',
     title: 'Now, and Then',
     scripture:
         '"For now we see through a glass, darkly; but then face to face."—1 Corinthians 13:12',
@@ -730,7 +730,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "15",
+    id: '15',
     title: 'Heaven\'s Nurse Children',
     scripture:
         '"I taught Ephraim also to go, taking them by their arms."—Hosea 11:3',
@@ -774,7 +774,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "16",
+    id: '16',
     title: 'A Clear Conscience',
     scripture:
         '“Then shall I not he ashamed, when I have respect unto all thy commandments.” — Psalm cxix. 6.',
@@ -809,7 +809,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "17",
+    id: '17',
     title: 'The Prayer of Jabez',
     scripture: '"Oh that thou wouldest bless me indeed!"—1 Chronicles 4:10',
     source: 'Metropolitan Tabernacle Pulpit Volume 17',
@@ -859,7 +859,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "18",
+    id: '18',
     title: 'Am I a Sea, or a Whale?',
     scripture:
         '“Am I a sea, or a whale, that thou settest a watch over me?”— Job vii. 17.',
@@ -906,7 +906,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "19",
+    id: '19',
     title: 'The Shining of the Face of Moses',
     scripture:
         '“And it came to pass, when Moses came down from mount Sinai with the two tables of testimony in Moses’ hand, when he came down from the mount, that Moses wist not that the skin of his face shone while he talked with him. And when Aaron and all the children of Israel saw Moses, behold, the skin of his face shone; and they were afraid to come nigh him. And Moses called unto them; and Aaron and all the rulers of the congregation returned unto him: and Moses talked with them. And afterward all the children of Israel came nigh: and he gave them in commandment all that the Lord had spoken with him in mount Sinai. And till Moses had done speaking with them, he put a vail on his face. But when Moses went in before the Lord to speak with him, he took the vail off, until he came out. And he came out, and spake unto the children of Israel that which he was commanded. And the children of Israel saw the face of Moses, that the skin of Moses’ face shone: and Moses put the vail upon his face again, until he went in to speak with him.”— Exodus xxxiv. 29— 35.',
@@ -960,7 +960,7 @@ final sermons = [
     ],
   ),
   Sermon(
-    id: "20",
+    id: '20',
     title: 'The Best Beloved',
     scripture: '“Yea, he is altogether lovely.”— Solomon’s Song v. 16.',
     source: 'Metropolitan Tabernacle Pulpit Volume 24',

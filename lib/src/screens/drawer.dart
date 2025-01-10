@@ -52,7 +52,7 @@ class MainDrawer extends ConsumerWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return BookmarksScreen();
+                    return const BookmarksScreen();
                   },
                 ),
               );
