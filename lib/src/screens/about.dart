@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:m_e/src/providers/is_am.dart';
 
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends ConsumerWidget {
   const AboutScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final now = DateTime.now();
-    final isAm = now.hour < 12;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isAm = ref.read(isAmProvider);
 
     return Scaffold(
       appBar: AppBar(

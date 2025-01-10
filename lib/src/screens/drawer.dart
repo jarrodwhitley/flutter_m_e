@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:m_e/src/screens/settings.dart';
 import 'package:m_e/src/screens/about.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:m_e/src/providers/is_am.dart';
+import 'package:m_e/src/screens/bookmarks.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key});
-
   final coffeeUrl = 'https://buymeacoffee.com/jarrodwhitley';
 
   @override
-  Widget build(BuildContext context) {
-    final now = DateTime.now();
-    final isAm = now.hour < 12;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isAm = ref.read(isAmProvider);
 
     return Drawer(
       child: Column(
         children: [
           AppBar(
+            centerTitle: false,
             title: const Text(
               'M&E',
               textAlign: TextAlign.start,
@@ -38,6 +40,19 @@ class MainDrawer extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) {
                     return const AboutScreen();
+                  },
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.bookmark),
+            title: const Text('Bookmarks'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return BookmarksScreen();
                   },
                 ),
               );

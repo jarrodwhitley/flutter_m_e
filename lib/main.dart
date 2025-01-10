@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_e/src/screens/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 
-// set up theme
 final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
 ).copyWith(
@@ -11,8 +11,6 @@ final theme = ThemeData(
     backgroundColor: Color.fromARGB(255, 103, 189, 178),
   ),
 );
-
-// dark theme
 final darkTheme = ThemeData.dark().copyWith(
   textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
   appBarTheme: const AppBarTheme(
@@ -21,8 +19,12 @@ final darkTheme = ThemeData.dark().copyWith(
 );
 
 void main() {
-  WidgetsFlutterBinding
-      .ensureInitialized(); // Ensure the binding is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
+  ));
   runApp(
     ProviderScope(
       child: MaterialApp(

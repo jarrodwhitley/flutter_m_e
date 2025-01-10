@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:m_e/src/data/sermons.dart';
 import 'package:m_e/src/models/sermon.dart';
-import 'package:m_e/src/screens/sermon.dart';
+import 'package:m_e/src/providers/sermon.dart';
 
-// The purpose of this screen is to list all available sermons and provide a search feature that allows the user to search by title, scripture, or body content
-class SermonSearchScreen extends StatefulWidget {
-  const SermonSearchScreen({super.key, required this.onSermonSelected});
-  final Function(Sermon) onSermonSelected;
+class SermonSearchScreen extends ConsumerStatefulWidget {
+  const SermonSearchScreen({super.key});
+
   @override
-  State<SermonSearchScreen> createState() => _SermonSearchScreenState();
+  ConsumerState<SermonSearchScreen> createState() => _SermonSearchScreenState();
 }
 
-class _SermonSearchScreenState extends State<SermonSearchScreen> {
+class _SermonSearchScreenState extends ConsumerState<SermonSearchScreen> {
   String _searchText = '';
   late List<Sermon> filteredSermons;
 
@@ -42,6 +42,11 @@ class _SermonSearchScreenState extends State<SermonSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ref = ProviderScope.containerOf(context);
+    void onSermonSelected(Sermon sermon) {
+      ref.read(sermonProvider.notifier).selectSermon(sermon);
+    }
+
     return Column(
       children: [
         const SizedBox(height: 8),
@@ -68,14 +73,7 @@ class _SermonSearchScreenState extends State<SermonSearchScreen> {
                       : sermon.scripture,
                 ),
                 onTap: () {
-                  widget.onSermonSelected(sermon);
-                  //   Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) {
-                  //       return SermonScreen(sermon: sermon);
-                  //     },
-                  //   ),
-                  // );
+                  onSermonSelected(sermon);
                 },
               );
             },
