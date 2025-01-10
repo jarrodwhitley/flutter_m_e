@@ -8,7 +8,6 @@ class SermonNotifier extends StateNotifier<Sermon?> {
   //
 
   void selectSermon(Sermon sermon) {
-    print('Selected sermon: ${sermon.title}');
     state = sermon;
   }
 

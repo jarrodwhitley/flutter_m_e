@@ -20,6 +20,9 @@ class BookmarksScreenState extends ConsumerState<BookmarksScreen> {
     final ref = ProviderScope.containerOf(context);
     final isAm = ref.read(isAmProvider);
     void onSermonSelected(Sermon sermon) {
+      // TODO: I'd love to do this a better way eventually
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
       ref.read(sermonProvider.notifier).selectSermon(sermon);
     }
 
