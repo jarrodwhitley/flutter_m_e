@@ -22,7 +22,6 @@ class BookmarksScreenState extends ConsumerState<BookmarksScreen> {
     final isAm = ref.read(isAmProvider);
     final bookmarkedSermonIds = ref.watch(bookmarksProvider);
     final List<Sermon> sermonData = sermons;
-    print('bookmarkedSermonIds $bookmarkedSermonIds');
     final List<Sermon> bookmarkedSermons = bookmarkedSermonIds
         .map((id) => sermonData.firstWhere(
               (sermon) => sermon.id == id.toString(),
@@ -36,7 +35,6 @@ class BookmarksScreenState extends ConsumerState<BookmarksScreen> {
               ),
             ))
         .toList();
-    print('bookmarkedSermons $bookmarkedSermons');
 
     void onSermonSelected(Sermon sermon) {
       // TODO: I'd love to do this a better way eventually

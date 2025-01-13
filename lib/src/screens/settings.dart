@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:m_e/src/providers/is_am.dart';
+import 'package:m_e/src/providers/settings.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAm = ref.read(isAmProvider);
+    final isAm = ref.watch(isAmProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -17,9 +18,7 @@ class SettingsScreen extends ConsumerWidget {
             color: Colors.white,
           ),
         ),
-        backgroundColor: isAm
-            ? const Color.fromARGB(255, 103, 189, 178)
-            : const Color.fromARGB(255, 55, 30, 83),
+        backgroundColor: isAm.getBackgroundColor(),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
@@ -58,12 +57,22 @@ class SettingsScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _buildThemeButton('Auto', true),
-                          _buildThemeButton('Light', false),
-                          _buildThemeButton('Dark', false),
+                          _buildThemeButton(ref, 'Auto', 0),
+                          _buildThemeButton(ref, 'Light', 1),
+                          _buildThemeButton(ref, 'Dark', 2),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       const Text(
                         'Font Size - 16',
                         style: TextStyle(
@@ -81,38 +90,6 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-
-              // Support Section
-              const Text(
-                'Support',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey),
-              ),
-              const SizedBox(height: 10),
-              ListTile(
-                leading: const Icon(Icons.share),
-                title: const Text('Share App'),
-                onTap: () {
-                  // Add Share App functionality here
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.coffee),
-                title: const Text('Buy me a coffee'),
-                onTap: () {
-                  // Add Buy me a coffee functionality here
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.bug_report),
-                title: const Text('Found a bug?'),
-                onTap: () {
-                  // Add Found a bug functionality here
-                },
-              ),
             ],
           ),
         ),
@@ -120,16 +97,22 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildThemeButton(String label, bool selected) {
+  void setThemeOverride(WidgetRef ref, int selected) {
+    final settingsNotifier = ref.read(settingsProvider.notifier);
+    settingsNotifier.setThemeOverride(selected);
+  }
+
+  Widget _buildThemeButton(WidgetRef ref, String label, int selected) {
+    final themeOverride = ref.watch(settingsProvider).themeOverride;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: selected ? Colors.grey : Colors.white,
+        backgroundColor: selected == themeOverride ? Colors.grey : Colors.white,
         foregroundColor: Colors.black,
         side: const BorderSide(color: Colors.grey),
         elevation: 0,
       ),
       onPressed: () {
-        // Add theme change logic here
+        setThemeOverride(ref, selected);
       },
       child: Text(label),
     );

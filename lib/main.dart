@@ -3,20 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:m_e/src/screens/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
-
-final theme = ThemeData(
-  textTheme: GoogleFonts.latoTextTheme(),
-).copyWith(
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Color.fromARGB(255, 103, 189, 178),
-  ),
-);
-final darkTheme = ThemeData.dark().copyWith(
-  textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Color.fromARGB(255, 55, 30, 83),
-  ),
-);
+import 'package:m_e/src/providers/settings.dart';
+import 'package:m_e/src/providers/is_am.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,24 +14,42 @@ void main() {
     statusBarBrightness: Brightness.dark,
   ));
   runApp(
-    ProviderScope(
-      child: MaterialApp(
-        theme: theme,
-        darkTheme: darkTheme,
-        themeMode: ThemeMode.dark,
-        home: const App(),
-      ),
+    const ProviderScope(
+      child: App(),
     ),
   );
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isAm = ref.watch(isAmProvider.notifier);
+    final Color? appBarColor;
+    final int themeOverride = ref.watch(settingsProvider).themeOverride;
+    final Color? themeOverrideBackground =
+        ref.watch(settingsProvider).themeOverrideBackground;
+
+    // Check if theme is being overridden
+    if (themeOverride != 0) {
+      appBarColor = isAm.getBackgroundColor();
+    } else {
+      appBarColor = themeOverrideBackground;
+    }
+
+    final ThemeData theme = ThemeData(
+      textTheme: GoogleFonts.latoTextTheme(),
+    ).copyWith(
+      textTheme: GoogleFonts.latoTextTheme().copyWith(),
+      appBarTheme: AppBarTheme(
+        backgroundColor: appBarColor,
+      ),
+    );
+    return MaterialApp(
+      title: 'M&E',
+      theme: theme,
+      home: const HomeScreen(),
     );
   }
 }

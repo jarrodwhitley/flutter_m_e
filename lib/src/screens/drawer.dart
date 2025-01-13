@@ -15,6 +15,12 @@ class MainDrawer extends ConsumerWidget {
     final isAm = ref.read(isAmProvider);
 
     return Drawer(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(8),
+          bottomRight: Radius.circular(8),
+        ),
+      ),
       child: Column(
         children: [
           AppBar(

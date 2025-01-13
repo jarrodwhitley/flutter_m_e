@@ -55,11 +55,10 @@ class MeAppBarState extends ConsumerState<MeAppBar> {
       elevation: 0,
       title: Text(
         widget.activeScreenTitle,
-        style: const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.w500,
-          color: Colors.white,
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(color: Colors.white),
       ),
       iconTheme: const IconThemeData(
         color: Colors

@@ -96,7 +96,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: isAm
-            ? const Color.fromARGB(255, 86, 159, 149)
+            ? const Color.fromARGB(255, 75, 139, 131)
             : const Color.fromARGB(255, 41, 22, 62),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
