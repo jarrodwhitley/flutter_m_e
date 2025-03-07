@@ -13,15 +13,18 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   // When theme is overridden, the background color of the app bar is set to this color
   void setThemeOverride(int value) {
-    state = state.copyWith(themeOverride: value);
+    Color? backgroundColor;
     if (value == 1) {
-      state = state.copyWith(
-          themeOverrideBackground: const Color.fromARGB(255, 103, 189, 178));
+      backgroundColor = const Color.fromARGB(255, 103, 189, 178);
     } else if (value == 2) {
-      state = state.copyWith(
-          themeOverrideBackground: const Color.fromARGB(255, 55, 30, 83));
+      backgroundColor = const Color.fromARGB(255, 55, 30, 83);
     }
-    print('Theme Override: ${state.themeOverride}');
+
+    state = state.copyWith(
+      themeOverride: value,
+      themeOverrideBackground: backgroundColor,
+    );
+
     _saveSettings();
   }
 

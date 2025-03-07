@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:m_e/src/screens/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
-import 'package:m_e/src/providers/settings.dart';
+
+import 'package:m_e/src/screens/home.dart';
+import 'package:m_e/src/providers/settings_provider.dart';
 import 'package:m_e/src/providers/is_am.dart';
 
 void main() {

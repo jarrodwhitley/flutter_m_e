@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:m_e/src/providers/is_am.dart';
-import 'package:m_e/src/providers/settings.dart';
+import 'package:m_e/src/providers/settings_provider.dart';
+import 'package:m_e/src/widgets/theme_button.dart';
+import 'package:m_e/src/widgets/font_size_button.dart';
 
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  @override
+  Widget build(BuildContext context) {
     final isAm = ref.watch(isAmProvider.notifier);
+    final int themeOverride = ref.watch(settingsProvider).themeOverride;
+    final Color? themeOverrideBackground =
+        ref.watch(settingsProvider).themeOverrideBackground;
 
     return Scaffold(
       appBar: AppBar(
@@ -18,7 +28,9 @@ class SettingsScreen extends ConsumerWidget {
             color: Colors.white,
           ),
         ),
-        backgroundColor: isAm.getBackgroundColor(),
+        backgroundColor: themeOverride > 0
+            ? themeOverrideBackground
+            : isAm.getBackgroundColor(),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
@@ -57,9 +69,9 @@ class SettingsScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _buildThemeButton(ref, 'Auto', 0),
-                          _buildThemeButton(ref, 'Light', 1),
-                          _buildThemeButton(ref, 'Dark', 2),
+                          ThemeButton(ref: ref, label: 'Auto', selected: 0),
+                          ThemeButton(ref: ref, label: 'Light', selected: 1),
+                          ThemeButton(ref: ref, label: 'Dark', selected: 2),
                         ],
                       ),
                     ],
@@ -82,8 +94,18 @@ class SettingsScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _buildFontSizeButton(Icons.remove),
-                          _buildFontSizeButton(Icons.add),
+                          FontSizeButton(
+                            icon: Icons.remove,
+                            onPressed: () {
+                              // Add font size decrease logic here
+                            },
+                          ),
+                          FontSizeButton(
+                            icon: Icons.add,
+                            onPressed: () {
+                              // Add font size increase logic here
+                            },
+                          ),
                         ],
                       ),
                     ],
@@ -94,42 +116,6 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void setThemeOverride(WidgetRef ref, int selected) {
-    final settingsNotifier = ref.read(settingsProvider.notifier);
-    settingsNotifier.setThemeOverride(selected);
-  }
-
-  Widget _buildThemeButton(WidgetRef ref, String label, int selected) {
-    final themeOverride = ref.watch(settingsProvider).themeOverride;
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: selected == themeOverride ? Colors.grey : Colors.white,
-        foregroundColor: Colors.black,
-        side: const BorderSide(color: Colors.grey),
-        elevation: 0,
-      ),
-      onPressed: () {
-        setThemeOverride(ref, selected);
-      },
-      child: Text(label),
-    );
-  }
-
-  Widget _buildFontSizeButton(IconData icon) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        side: const BorderSide(color: Colors.grey),
-        elevation: 0,
-      ),
-      onPressed: () {
-        // Add font size change logic here
-      },
-      child: Icon(icon),
     );
   }
 }
