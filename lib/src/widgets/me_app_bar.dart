@@ -3,20 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:m_e/src/models/sermon.dart';
 import 'package:m_e/src/providers/bookmarks.dart';
+import 'package:m_e/src/providers/is_am_provider.dart';
 import 'package:m_e/src/providers/sermon.dart';
+import 'package:m_e/src/providers/settings_provider.dart';
 
 class MeAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   const MeAppBar(
       {super.key,
       this.sermon,
       required this.activeScreenTitle,
-      required this.isAm,
       required this.isBookmarked,
       required this.bookmarkToggle});
 
   final Sermon? sermon;
   final String activeScreenTitle;
-  final bool isAm;
   final bool isBookmarked;
   final void Function(Sermon) bookmarkToggle;
 
@@ -33,6 +33,11 @@ class MeAppBarState extends ConsumerState<MeAppBar> {
     final sermon = ref.watch(sermonProvider);
     var isBookmarked =
         sermon != null && ref.watch(bookmarksProvider).contains(sermon.id);
+    final isAm = ref.watch(isAmProvider.notifier);
+    final int colorThemeOverride =
+        ref.watch(settingsProvider).colorThemeOverride;
+    final Color? colorThemeOverrideBackground =
+        ref.watch(settingsProvider).colorThemeOverrideBackground;
 
     return AppBar(
       actions: widget.sermon != null
@@ -48,9 +53,9 @@ class MeAppBarState extends ConsumerState<MeAppBar> {
             ]
           : null,
       flexibleSpace: Container(
-        color: widget.isAm
-            ? const Color.fromARGB(255, 103, 189, 178)
-            : const Color.fromARGB(255, 55, 30, 83),
+        color: colorThemeOverride > 0
+            ? colorThemeOverrideBackground
+            : isAm.getBackgroundColor(),
       ),
       elevation: 0,
       title: Text(
@@ -64,6 +69,9 @@ class MeAppBarState extends ConsumerState<MeAppBar> {
         color: Colors
             .white, // Set the color of the drawer icon and back arrow to white
       ),
+      backgroundColor: colorThemeOverride > 0
+          ? colorThemeOverrideBackground
+          : isAm.getBackgroundColor(),
     );
   }
 }

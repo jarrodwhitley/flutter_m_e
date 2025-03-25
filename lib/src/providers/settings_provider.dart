@@ -12,8 +12,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
   SettingsNotifier() : super(Settings());
 
   // When theme is overridden, the background color of the app bar is set to this color
-  void setThemeOverride(int value) {
+  // If the value is 0 then the theme is set to auto (following the time of day)
+  void setcolorThemeOverride(int value) {
     Color? backgroundColor;
+
     if (value == 1) {
       backgroundColor = const Color.fromARGB(255, 103, 189, 178);
     } else if (value == 2) {
@@ -21,8 +23,29 @@ class SettingsNotifier extends StateNotifier<Settings> {
     }
 
     state = state.copyWith(
-      themeOverride: value,
-      themeOverrideBackground: backgroundColor,
+      colorThemeOverride: value,
+      colorThemeOverrideBackground: backgroundColor,
+    );
+
+    _saveSettings();
+  }
+
+  void setReadercolorThemeOverride(int value) {
+    Color? readerTextColor;
+    Color? readerBackgroundColor;
+
+    if (value == 1) {
+      readerTextColor = Colors.black;
+      readerBackgroundColor = Colors.white;
+    } else if (value == 2) {
+      readerTextColor = Colors.white;
+      readerBackgroundColor = const Color.fromARGB(255, 36, 19, 54);
+    }
+
+    state = state.copyWith(
+      readercolorThemeOverride: value,
+      readerTextColor: readerTextColor,
+      readerBackgroundColor: readerBackgroundColor,
     );
 
     _saveSettings();
@@ -30,14 +53,28 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   void _saveSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('themeOverride', state.themeOverride);
+    await prefs.setInt('colorThemeOverride', state.colorThemeOverride);
+    await prefs.setInt(
+        'readercolorThemeOverride', state.readercolorThemeOverride);
   }
 
-  int themeOverride() {
-    return state.themeOverride;
+  int colorThemeOverride() {
+    return state.colorThemeOverride;
   }
 
-  Color? themeOverrideBackground() {
-    return state.themeOverrideBackground;
+  Color? colorThemeOverrideBackground() {
+    return state.colorThemeOverrideBackground;
+  }
+
+  int readerThemeOverride() {
+    return state.readercolorThemeOverride;
+  }
+
+  Color? readerTextColor() {
+    return state.readerTextColor;
+  }
+
+  Color? readerBackgroundColor() {
+    return state.readerBackgroundColor;
   }
 }

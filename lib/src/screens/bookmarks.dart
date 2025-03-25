@@ -6,7 +6,7 @@ import 'package:m_e/src/data/sermons.dart';
 import 'package:m_e/src/providers/bookmarks.dart';
 import 'package:m_e/src/providers/sermon.dart';
 import 'package:m_e/src/models/sermon.dart';
-import 'package:m_e/src/providers/is_am.dart';
+import 'package:m_e/src/providers/is_am_provider.dart';
 import 'package:flutter/cupertino.dart';
 
 class BookmarksScreen extends ConsumerStatefulWidget {

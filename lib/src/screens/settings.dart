@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:m_e/src/providers/is_am.dart';
+import 'package:m_e/src/providers/is_am_provider.dart';
 import 'package:m_e/src/providers/settings_provider.dart';
 import 'package:m_e/src/widgets/theme_button.dart';
 import 'package:m_e/src/widgets/font_size_button.dart';
@@ -16,9 +16,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final isAm = ref.watch(isAmProvider.notifier);
-    final int themeOverride = ref.watch(settingsProvider).themeOverride;
-    final Color? themeOverrideBackground =
-        ref.watch(settingsProvider).themeOverrideBackground;
+    final int colorThemeOverride =
+        ref.watch(settingsProvider).colorThemeOverride;
+    final Color? colorThemeOverrideBackground =
+        ref.watch(settingsProvider).colorThemeOverrideBackground;
 
     return Scaffold(
       appBar: AppBar(
@@ -28,8 +29,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: themeOverride > 0
-            ? themeOverrideBackground
+        backgroundColor: colorThemeOverride > 0
+            ? colorThemeOverrideBackground
             : isAm.getBackgroundColor(),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -61,7 +62,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Theme',
+                        'Color Theme',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -69,9 +70,48 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ThemeButton(ref: ref, label: 'Auto', selected: 0),
-                          ThemeButton(ref: ref, label: 'Light', selected: 1),
-                          ThemeButton(ref: ref, label: 'Dark', selected: 2),
+                          ThemeButton(
+                              ref: ref,
+                              type: 'color',
+                              label: 'Auto',
+                              selected: 0),
+                          ThemeButton(
+                              ref: ref,
+                              type: 'color',
+                              label: 'Light',
+                              selected: 1),
+                          ThemeButton(
+                              ref: ref,
+                              type: 'color',
+                              label: 'Dark',
+                              selected: 2),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Reader Theme',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ThemeButton(
+                              ref: ref,
+                              type: 'reader',
+                              label: 'Auto',
+                              selected: 0),
+                          ThemeButton(
+                              ref: ref,
+                              type: 'reader',
+                              label: 'Light',
+                              selected: 1),
+                          ThemeButton(
+                              ref: ref,
+                              type: 'reader',
+                              label: 'Dark',
+                              selected: 2),
                         ],
                       ),
                     ],

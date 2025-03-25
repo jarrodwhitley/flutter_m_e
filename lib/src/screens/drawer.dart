@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:m_e/src/providers/settings_provider.dart';
 import 'package:m_e/src/screens/settings.dart';
 import 'package:m_e/src/screens/about.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:m_e/src/providers/is_am.dart';
+import 'package:m_e/src/providers/is_am_provider.dart';
 import 'package:m_e/src/screens/bookmarks.dart';
 
 class MainDrawer extends ConsumerWidget {
@@ -12,7 +13,11 @@ class MainDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAm = ref.read(isAmProvider);
+    final isAm = ref.watch(isAmProvider.notifier);
+    final int colorThemeOverride =
+        ref.watch(settingsProvider).colorThemeOverride;
+    final Color? colorThemeOverrideBackground =
+        ref.watch(settingsProvider).colorThemeOverrideBackground;
 
     return Drawer(
       shape: const RoundedRectangleBorder(
@@ -32,9 +37,9 @@ class MainDrawer extends ConsumerWidget {
                 color: Colors.white,
               ),
             ),
-            backgroundColor: isAm
-                ? const Color.fromARGB(255, 103, 189, 178)
-                : const Color.fromARGB(255, 55, 30, 83),
+            backgroundColor: colorThemeOverride > 0
+                ? colorThemeOverrideBackground
+                : isAm.getBackgroundColor(),
             automaticallyImplyLeading: false,
             iconTheme: const IconThemeData(color: Colors.white),
           ),

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final isAmProvider = StateNotifierProvider<IsAmNotifier, bool>((ref) {
-  return IsAmNotifier();
-});
-
 class IsAmNotifier extends StateNotifier<bool> {
   IsAmNotifier() : super(_getInitialIsAm());
 
@@ -19,3 +15,7 @@ class IsAmNotifier extends StateNotifier<bool> {
         : const Color.fromARGB(255, 55, 30, 83);
   }
 }
+
+final isAmProvider = StateNotifierProvider<IsAmNotifier, bool>((ref) {
+  return IsAmNotifier();
+});

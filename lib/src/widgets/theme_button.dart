@@ -6,28 +6,28 @@ class ThemeButton extends StatelessWidget {
   final WidgetRef ref;
   final String label;
   final int selected;
+  final bool isSelected;
+  final VoidCallback onPressed;
 
   const ThemeButton({
     super.key,
     required this.ref,
     required this.label,
     required this.selected,
+    required this.isSelected,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    final themeOverride = ref.watch(settingsProvider).themeOverride;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: selected == themeOverride ? Colors.grey : Colors.white,
+        backgroundColor: isSelected ? Colors.grey : Colors.white,
         foregroundColor: Colors.black,
         side: const BorderSide(color: Colors.grey),
         elevation: 0,
       ),
-      onPressed: () {
-        final settingsNotifier = ref.read(settingsProvider.notifier);
-        settingsNotifier.setThemeOverride(selected);
-      },
+      onPressed: onPressed,
       child: Text(label),
     );
   }

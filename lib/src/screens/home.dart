@@ -4,12 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:m_e/src/data/devotions.dart';
 import 'package:m_e/src/models/devotion.dart';
 import 'package:m_e/src/models/sermon.dart';
+import 'package:m_e/src/providers/settings_provider.dart';
 import 'package:m_e/src/screens/drawer.dart';
 import 'package:m_e/src/screens/devotion.dart';
 import 'package:m_e/src/screens/sermon_search.dart';
 import 'package:m_e/src/screens/sermon.dart';
 import 'package:m_e/src/providers/bookmarks.dart';
-import 'package:m_e/src/providers/is_am.dart';
+import 'package:m_e/src/providers/is_am_provider.dart';
 import 'package:m_e/src/providers/sermon.dart';
 import 'package:m_e/src/widgets/me_app_bar.dart';
 
@@ -50,11 +51,15 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final isAm = ref.read(isAmProvider);
+    final isAmColor = ref.watch(isAmProvider.notifier);
+    final colorThemeOverride = ref.watch(settingsProvider).colorThemeOverride;
+    final Color? colorThemeOverrideBackground =
+        ref.watch(settingsProvider).colorThemeOverrideBackground;
     final devotion = selectedDevotions
         .firstWhere((content) => content.time == (isAm ? 'am' : 'pm'));
     final sermon = ref.watch(sermonProvider);
+
     Widget activeScreen = DevotionScreen(
-      isAm: isAm,
       devotion: devotion,
     );
     var activeScreenTitle = devotion.title;
@@ -80,7 +85,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: MeAppBar(
         activeScreenTitle: activeScreenTitle,
         sermon: sermon,
-        isAm: isAm,
         bookmarkToggle: bookmarkToggle,
         isBookmarked: sermon != null ? isBookmarked(sermon) : false,
       ),
@@ -95,9 +99,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         children: [activeScreen],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: isAm
-            ? const Color.fromARGB(255, 75, 139, 131)
-            : const Color.fromARGB(255, 41, 22, 62),
+        backgroundColor: colorThemeOverride > 0
+            ? colorThemeOverrideBackground
+            : isAmColor.getBackgroundColor(),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
         onTap: selectPage,
