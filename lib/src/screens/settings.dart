@@ -74,17 +74,35 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                               ref: ref,
                               type: 'color',
                               label: 'Auto',
-                              selected: 0),
+                              isSelected: colorThemeOverride == 0,
+                              selected: 0,
+                              onPressed: () {
+                                ref
+                                    .read(settingsProvider.notifier)
+                                    .setColorThemeOverride(0);
+                              }),
                           ThemeButton(
                               ref: ref,
                               type: 'color',
                               label: 'Light',
-                              selected: 1),
+                              isSelected: colorThemeOverride == 1,
+                              selected: 1,
+                              onPressed: () {
+                                ref
+                                    .read(settingsProvider.notifier)
+                                    .setColorThemeOverride(1);
+                              }),
                           ThemeButton(
                               ref: ref,
                               type: 'color',
                               label: 'Dark',
-                              selected: 2),
+                              isSelected: colorThemeOverride == 2,
+                              selected: 2,
+                              onPressed: () {
+                                ref
+                                    .read(settingsProvider.notifier)
+                                    .setColorThemeOverride(2);
+                              }),
                         ],
                       ),
                       const SizedBox(height: 16),

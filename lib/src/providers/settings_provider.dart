@@ -13,7 +13,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   // When theme is overridden, the background color of the app bar is set to this color
   // If the value is 0 then the theme is set to auto (following the time of day)
-  void setcolorThemeOverride(int value) {
+  void setColorThemeOverride(int value) {
     Color? backgroundColor;
 
     if (value == 1) {

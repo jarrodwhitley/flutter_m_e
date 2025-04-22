@@ -4,6 +4,7 @@ import 'package:m_e/src/providers/settings_provider.dart';
 
 class ThemeButton extends StatelessWidget {
   final WidgetRef ref;
+  final String type;
   final String label;
   final int selected;
   final bool isSelected;
@@ -13,6 +14,7 @@ class ThemeButton extends StatelessWidget {
     super.key,
     required this.ref,
     required this.label,
+    required this.type,
     required this.selected,
     required this.isSelected,
     required this.onPressed,
