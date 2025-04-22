@@ -25,8 +25,35 @@ class AboutScreen extends StatelessWidget {
           },
         ),
       ),
-      body: const Center(
-        child: Text('This is the about screen.'),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Image.asset(
+              'lib/src/assets/images/spurgeon_icon.png',
+              height: 100,
+              fit: BoxFit.contain,
+            ),
+          ),
+          const Text(
+            'Morning & Evening',
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          const Text('by Charles H. Spurgeon'),
+          const SizedBox(height: 10),
+          const Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Text(
+                    '    Charles Haddon Spurgeon (1834-1892) was a British Baptist minister and renowned author who is considered one of the most influential figures in Christian history. Known as the "Prince of Preachers," Spurgeon delivered powerful sermons that attracted thousands of people every week, filling London\'s a collection of daily devotionals that Spurgeon wrote to provide readers with a daily reminder of God\'s presence and grace.\n\n    The devotionals are organized into morning and evening entries for each day of the year, offering timeless insights and encouragement that are still relevant to readers today.\n\n    With its eloquent language and profound spiritual truths, "Morning and Evening" is a beloved classic in Christian literature that continues to encourage and challenge readers around the world.'),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

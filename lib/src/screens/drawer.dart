@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_e/src/screens/settings.dart';
+import 'package:m_e/src/screens/notifications.dart';
 import 'package:m_e/src/screens/about.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,14 +44,27 @@ class MainDrawer extends StatelessWidget {
               );
             },
           ),
+          // ListTile(
+          //   leading: const Icon(Icons.settings),
+          //   title: const Text('Settings'),
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(
+          //         builder: (context) {
+          //           return const SettingsScreen();
+          //         },
+          //       ),
+          //     );
+          //   },
+          // ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            leading: const Icon(Icons.notifications),
+            title: const Text('Notifications'),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return const SettingsScreen();
+                    return const NotificationsScreen();
                   },
                 ),
               );
