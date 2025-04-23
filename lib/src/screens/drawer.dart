@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:m_e/src/screens/notifications.dart';
 import 'package:m_e/src/screens/about.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -74,7 +75,12 @@ class MainDrawer extends StatelessWidget {
             leading: const Icon(Icons.share),
             title: const Text('Share App'),
             onTap: () {
-              // share app , should work for apple android or whatever platform
+              const appLink =
+                  'https://example.com'; // Replace with your app's link
+              Share.share(
+                'Check out the Morning & Evening Devotional App! Download it here: $appLink',
+                subject: 'Morning & Evening Devotional',
+              );
             },
           ),
           ListTile(
