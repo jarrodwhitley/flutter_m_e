@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m_e/services/notification_services.dart';
 import 'src/screens/home.dart';
 
 // set up theme
@@ -15,7 +16,9 @@ final darkTheme = ThemeData.dark().copyWith(
   ),
 );
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.initialize();
   runApp(
     MaterialApp(
       theme: theme,

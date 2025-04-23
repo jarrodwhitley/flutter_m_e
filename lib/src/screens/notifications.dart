@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m_e/services/notification_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -18,6 +19,40 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   void initState() {
     super.initState();
     _loadSettings();
+  }
+
+  Future<void> _scheduleMorningNotification() async {
+    if (isMorningReminderEnabled) {
+      await NotificationService.scheduleNotification(
+        id: 1,
+        title: 'Morning Reminder',
+        body: 'Start your day with the Morning Devotional!',
+        time: morningTime,
+      );
+    } else {
+      await NotificationService.showNotification(
+        id: 1,
+        title: 'Morning Reminder Disabled',
+        body: 'Morning notifications have been turned off.',
+      );
+    }
+  }
+
+  Future<void> _scheduleEveningNotification() async {
+    if (isEveningReminderEnabled) {
+      await NotificationService.scheduleNotification(
+        id: 2,
+        title: 'Evening Reminder',
+        body: 'End your day with the Evening Devotional!',
+        time: eveningTime,
+      );
+    } else {
+      await NotificationService.showNotification(
+        id: 2,
+        title: 'Evening Reminder Disabled',
+        body: 'Evening notifications have been turned off.',
+      );
+    }
   }
 
   Future<void> _loadSettings() async {
@@ -59,11 +94,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       setState(() {
         if (isMorning) {
           morningTime = picked;
+          _scheduleMorningNotification();
         } else {
           eveningTime = picked;
+          _scheduleEveningNotification();
         }
       });
-      _saveSettings(); // Save the updated time
+      _saveSettings();
     }
   }
 
@@ -109,7 +146,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     setState(() {
                       isMorningReminderEnabled = value;
                     });
-                    _saveSettings(); // Save the updated switch state
+                    _saveSettings();
+                    _scheduleMorningNotification();
                   },
                 ),
                 TextButton(
@@ -140,7 +178,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     setState(() {
                       isEveningReminderEnabled = value;
                     });
-                    _saveSettings(); // Save the updated switch state
+                    _saveSettings();
+                    _scheduleEveningNotification();
                   },
                 ),
                 TextButton(

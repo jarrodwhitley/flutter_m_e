@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:m_e/src/screens/settings.dart';
+// import 'package:m_e/src/screens/settings.dart';
 import 'package:m_e/src/screens/notifications.dart';
 import 'package:m_e/src/screens/about.dart';
 import 'package:url_launcher/url_launcher.dart';
