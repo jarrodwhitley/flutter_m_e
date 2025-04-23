@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 // import 'package:m_e/src/screens/settings.dart';
 import 'package:m_e/src/screens/notifications.dart';
 import 'package:m_e/src/screens/about.dart';
@@ -98,7 +99,47 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.bug_report),
             title: const Text('Found a bug?'),
-            onTap: () {},
+            onTap: () async {
+              // Gather device and OS information
+              final deviceInfo = Platform.isAndroid ? 'Android' : 'iOS';
+              final osVersion = Platform.operatingSystemVersion;
+
+              // Prefill the email content
+              const email = 'me-bugs@jarrodwhitley.com';
+              final subject = Uri.encodeComponent('M&E Bug Report');
+              final devotionDate =
+                  DateTime.now().toString().split(' ')[0]; // Current date
+              final body = Uri.encodeComponent(
+                '''
+Hello!
+
+I found a bug in the Morning & Evening Devotional App. Here are the details:
+
+- Device: $deviceInfo
+- OS Version: $osVersion
+- Devotion Date: $devotionDate
+
+Please describe the issue here:
+
+
+Thank you!
+''',
+              );
+
+              // Construct the email URI
+              final emailUri = Uri(
+                scheme: 'mailto',
+                path: email,
+                query: 'subject=$subject&body=$body',
+              );
+
+              // Launch the email app
+              if (await canLaunchUrl(emailUri)) {
+                await launchUrl(emailUri);
+              } else {
+                throw 'Could not launch email client';
+              }
+            },
           ),
         ],
       ),
