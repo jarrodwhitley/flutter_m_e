@@ -22,9 +22,8 @@ class MainScreenState extends State<MainScreen> {
     }).toList();
 
     // temp override for testing purposes
-    // set selectedContent to September 10th
     // selectedContent = contentData.where((content) {
-    //   return content.month == 9 && content.day == 10;
+    //   return content.month == 12 && content.day == 29;
     // }).toList();
   }
 
@@ -85,6 +84,7 @@ class MainScreenState extends State<MainScreen> {
                   Text(
                     contentToShow.body,
                     style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.justify,
                   ),
                 ],
               ),

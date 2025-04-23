@@ -25,14 +25,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     if (isMorningReminderEnabled) {
       await NotificationService.scheduleNotification(
         id: 1,
-        title: 'Morning Reminder',
-        body: 'Start your day with the Morning Devotional!',
+        title: 'M&E',
+        body: 'Morning Devotional Reminder',
         time: morningTime,
       );
     } else {
       await NotificationService.showNotification(
         id: 1,
-        title: 'Morning Reminder Disabled',
+        title: 'M&E',
         body: 'Morning notifications have been turned off.',
       );
     }
@@ -42,14 +42,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     if (isEveningReminderEnabled) {
       await NotificationService.scheduleNotification(
         id: 2,
-        title: 'Evening Reminder',
-        body: 'End your day with the Evening Devotional!',
+        title: 'M&E',
+        body: 'Evening Devotional Reminder',
         time: eveningTime,
       );
     } else {
       await NotificationService.showNotification(
         id: 2,
-        title: 'Evening Reminder Disabled',
+        title: 'M&E',
         body: 'Evening notifications have been turned off.',
       );
     }
