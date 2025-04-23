@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:m_e/src/data/content_data.dart';
 import 'package:m_e/src/models/content.dart';
 import 'package:m_e/src/screens/drawer.dart';
@@ -53,6 +54,13 @@ class MainScreenState extends State<MainScreen> {
         iconTheme: const IconThemeData(
           color: Colors
               .white, // Set the color of the drawer icon and back arrow to white
+        ),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent, // Make the status bar transparent
+          statusBarIconBrightness:
+              Brightness.light, // Set status bar icons to white
+          statusBarBrightness:
+              Brightness.dark, // For iOS: Set status bar text to white
         ),
       ),
       drawer: const MainDrawer(),
